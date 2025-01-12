@@ -9,8 +9,6 @@ import Foundation
 import EssentialFeed
 
 class FeedStoreSpy: FeedStore {
-    typealias DeletionCacheCompletion = (Error?) -> Void
-    typealias InsertionCacheCompletion = (Error?) -> Void
     
     enum ReceivedMessage: Equatable {
         case deleteCacheFeed
@@ -22,6 +20,7 @@ class FeedStoreSpy: FeedStore {
     
     private var deletionCompletions = [DeletionCacheCompletion]()
     private var insertionCompletions = [InsertionCacheCompletion]()
+    private var retrievalCompletions = [RetrievalCacheCompletion]()
     
     func deleteCachedFeed(completion: @escaping DeletionCacheCompletion) {
         deletionCompletions.append(completion)
@@ -49,7 +48,12 @@ class FeedStoreSpy: FeedStore {
         insertionCompletions[index](nil)
     }
     
-    func retrieve() {
+    func retrieve(completion: @escaping RetrievalCacheCompletion) {
+        retrievalCompletions.append(completion)
         receivedMessages.append(.retrieve)
+    }
+    
+    func completeRetrieval(with error: Error?, at index: Int = 0) {
+        retrievalCompletions[index](error)
     }
 }
