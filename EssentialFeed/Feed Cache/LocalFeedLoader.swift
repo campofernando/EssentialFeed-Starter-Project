@@ -10,6 +10,7 @@ import Foundation
 public class LocalFeedLoader {
     private let store: FeedStore
     private let currentDate: () -> Date
+    private let calendar = Calendar(identifier: .gregorian)
     
     public typealias SaveResult = Error?
     public typealias LoadResult = LoadFeedResult
@@ -39,16 +40,27 @@ public class LocalFeedLoader {
     }
     
     public func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve { result in
+        store.retrieve { [unowned self] result in
             switch result {
             case let .failure(error):
                 completion(.failure(error))
-            case let .found(feed: feed, timestamp: timestamp):
+            case let .found(feed: feed, timestamp: timestamp) where self.cacheIsValid(timestamp):
                 completion(.success(feed.toModels()))
-            case .empty:
+            case .found, .empty:
                 completion(.success([]))
             }
         }
+    }
+    
+    private var maxCachedAgeInDays: Int {
+        return 7
+    }
+    
+    private func cacheIsValid(_ timestamp: Date) -> Bool {
+        guard let maxCacheAge = calendar.date(byAdding: .day, value: maxCachedAgeInDays, to: timestamp) else {
+            return false
+        }
+        return currentDate() < maxCacheAge
     }
 }
 
