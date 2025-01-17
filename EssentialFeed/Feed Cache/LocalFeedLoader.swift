@@ -50,10 +50,7 @@ public class LocalFeedLoader {
             case let .found(feed: feed, timestamp: timestamp) where self.cacheIsValid(timestamp):
                 completion(.success(feed.toModels()))
                 
-            case .found:
-                completion(.success([]))
-                
-            case .empty:
+            case .found, .empty:
                 completion(.success([]))
             }
         }
