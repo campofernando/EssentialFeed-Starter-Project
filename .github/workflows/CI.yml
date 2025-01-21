@@ -12,13 +12,13 @@ on:
 jobs:
   build-and-test:
 
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_16.app
+      run: sudo xcode-select -switch /Applications/Xcode_16.2.app
 
     - name: Build And Test
       run: xcodebuild test -project EssentialFeed/EssentialFeed.xcodeproj -scheme "CI" -sdk macosx -destination "platform=macOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
