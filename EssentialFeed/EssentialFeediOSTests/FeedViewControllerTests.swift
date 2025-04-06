@@ -55,9 +55,7 @@ final class FeedViewControllerTests: XCTestCase {
     func test_viewDidLoad_loadsFeed() {
         let (sut, spy) = makeSUT()
         
-        sut.loadViewIfNeeded()
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
+        sut.simulateAppearance()
         
         XCTAssertEqual(spy.loadCallCount, 1)
     }
@@ -65,9 +63,7 @@ final class FeedViewControllerTests: XCTestCase {
     func test_pullToRefresh_loadsFeed() {
         let (sut, spy) = makeSUT()
         
-        sut.loadViewIfNeeded()
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
+        sut.simulateAppearance()
         sut.refreshControl?.simulatePullToRefresh()
         
         XCTAssertEqual(spy.loadCallCount, 2)
@@ -80,18 +76,12 @@ final class FeedViewControllerTests: XCTestCase {
     func test_viewDidLoad_showsLoadingIndicator() {
         let (sut, _) = makeSUT()
         
-        sut.loadViewIfNeeded()
-        sut.replaceRefreshControlWithFakeForiOS17Suppport()
-        XCTAssertFalse(sut.refreshControl!.isRefreshing)
-        
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
+        sut.simulateAppearance()
         XCTAssertTrue(sut.refreshControl!.isRefreshing)
         
         sut.refreshControl?.endRefreshing()
         
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
+        sut.simulateAppearance()
         XCTAssertFalse(sut.refreshControl!.isRefreshing)
     }
     
@@ -128,6 +118,16 @@ extension UIRefreshControl {
 }
 
 private extension FeedViewController {
+    func simulateAppearance() {
+        if !isViewLoaded {
+            loadViewIfNeeded()
+            replaceRefreshControlWithFakeForiOS17Suppport()
+        }
+        
+        beginAppearanceTransition(true, animated: false)
+        endAppearanceTransition()
+    }
+    
     func replaceRefreshControlWithFakeForiOS17Suppport() {
         let fake = FakeRefreshControl()
         
