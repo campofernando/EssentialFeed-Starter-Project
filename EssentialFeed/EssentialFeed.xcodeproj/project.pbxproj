@@ -118,9 +118,26 @@
 		EDF97AB02D4D9F6B006CD2C7 /* ManagedFeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedFeedImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		ED20D7912DA2BFA500403DBB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				FeedViewController.swift,
+			);
+			target = ED20D7732D9757CC00403DBB /* EssentialFeediOS */;
+		};
+		ED20D7922DA2C0C000403DBB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				FeedViewController.swift,
+			);
+			target = ED20D77A2D9757CD00403DBB /* EssentialFeediOSTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		ED20D7752D9757CD00403DBB /* EssentialFeediOS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EssentialFeediOS; sourceTree = "<group>"; };
 		ED20D77F2D9757CD00403DBB /* EssentialFeediOSTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EssentialFeediOSTests; sourceTree = "<group>"; };
+		ED20D78D2DA2BF8A00403DBB /* EssentialFeediOS */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (ED20D7912DA2BFA500403DBB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ED20D7922DA2C0C000403DBB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = EssentialFeediOS; sourceTree = "<group>"; };
 		ED923E8E2D2233A400C45529 /* EssentialFeedAPIEndToEndTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EssentialFeedAPIEndToEndTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -175,7 +192,7 @@
 				ED0C6B682D0A58CC0006298B /* Feed API */,
 				080EDEFE21B6DA7E00813479 /* EssentialFeedTests */,
 				ED923E8E2D2233A400C45529 /* EssentialFeedAPIEndToEndTests */,
-				ED20D7752D9757CD00403DBB /* EssentialFeediOS */,
+				ED20D78D2DA2BF8A00403DBB /* EssentialFeediOS */,
 				ED20D77F2D9757CD00403DBB /* EssentialFeediOSTests */,
 				080EDEF221B6DA7E00813479 /* Products */,
 			);
@@ -398,9 +415,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				ED20D7752D9757CD00403DBB /* EssentialFeediOS */,
-			);
 			name = EssentialFeediOS;
 			packageProductDependencies = (
 			);
@@ -423,6 +437,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				ED20D77F2D9757CD00403DBB /* EssentialFeediOSTests */,
+				ED20D78D2DA2BF8A00403DBB /* EssentialFeediOS */,
 			);
 			name = EssentialFeediOSTests;
 			packageProductDependencies = (
@@ -475,6 +490,7 @@
 					};
 					ED20D7732D9757CC00403DBB = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1620;
 					};
 					ED20D77A2D9757CD00403DBB = {
 						CreatedOnToolsVersion = 16.2;
@@ -884,6 +900,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -913,6 +930,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -923,6 +941,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
