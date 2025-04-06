@@ -11,6 +11,7 @@ import EssentialFeed
 
 class FeedViewController: UITableViewController {
     private var loader: FeedLoader?
+    private var isViewAppeared = false
     
     convenience init(loader: FeedLoader) {
         self.init()
@@ -25,7 +26,9 @@ class FeedViewController: UITableViewController {
     }
     
     override func viewIsAppearing(_ animated: Bool) {
+        if isViewAppeared { return }
         load()
+        isViewAppeared = true
     }
     
     @objc func load() {
@@ -81,6 +84,12 @@ final class FeedViewControllerTests: XCTestCase {
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         XCTAssertTrue(sut.refreshControl!.isRefreshing)
+        
+        sut.refreshControl?.endRefreshing()
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        XCTAssertFalse(sut.refreshControl!.isRefreshing)
     }
     
     private func makeSUT(file: StaticString = #filePath,
