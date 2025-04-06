@@ -11,7 +11,7 @@ import EssentialFeed
 
 class FeedViewController: UITableViewController {
     private var loader: FeedLoader?
-    private var isViewAppeared = false
+    private var onViewIsAppearing: ((FeedViewController) -> Void)?
     
     convenience init(loader: FeedLoader) {
         self.init()
@@ -23,12 +23,15 @@ class FeedViewController: UITableViewController {
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
+        
+        onViewIsAppearing = { vc in
+            vc.load()
+            vc.onViewIsAppearing = nil
+        }
     }
     
     override func viewIsAppearing(_ animated: Bool) {
-        if isViewAppeared { return }
-        load()
-        isViewAppeared = true
+        onViewIsAppearing?(self)
     }
     
     @objc func load() {
