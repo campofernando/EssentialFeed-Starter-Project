@@ -62,15 +62,15 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(spy.loadCallCount, 1)
     }
     
-    func test_pullToRefresh_loadsFeed() {
+    func test_userInitiatedFeedReload_loadsFeed() {
         let (sut, spy) = makeSUT()
         
         sut.simulateAppearance()
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         
         XCTAssertEqual(spy.loadCallCount, 2)
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         
         XCTAssertEqual(spy.loadCallCount, 3)
     }
@@ -81,7 +81,7 @@ final class FeedViewControllerTests: XCTestCase {
         sut.simulateAppearance()
         XCTAssertTrue(sut.refreshControl!.isRefreshing)
         
-        sut.refreshControl?.endRefreshing()
+        sut.simulateEndFeedReload()
         
         sut.simulateAppearance()
         XCTAssertFalse(sut.refreshControl!.isRefreshing)
@@ -97,20 +97,20 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertFalse(sut.refreshControl!.isRefreshing)
     }
     
-    func test_pullToRefresh_showsLoadingIndicator() {
+    func test_userInitiatedFeedReload_showsLoadingIndicator() {
         let (sut, _) = makeSUT()
         
         sut.replaceRefreshControlWithFakeForiOS17Suppport()
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         
         XCTAssertTrue(sut.refreshControl!.isRefreshing)
     }
     
-    func test_pullToRefresh_hidesLoaderIndicatorOnLoaderCompletion() {
+    func test_userInitiatedFeedReload_hidesLoaderIndicatorOnLoaderCompletion() {
         let (sut, spy) = makeSUT()
         
         sut.replaceRefreshControlWithFakeForiOS17Suppport()
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         spy.completeFeedLoading()
         
         XCTAssertFalse(sut.refreshControl!.isRefreshing)
@@ -181,6 +181,14 @@ private extension FeedViewController {
         }
         
         refreshControl = fake
+    }
+    
+    func simulateUserInitiatedFeedReload() {
+        refreshControl?.simulatePullToRefresh()
+    }
+    
+    func simulateEndFeedReload() {
+        refreshControl?.endRefreshing()
     }
 }
 
