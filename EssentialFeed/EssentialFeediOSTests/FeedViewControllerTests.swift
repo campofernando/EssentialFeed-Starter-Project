@@ -33,13 +33,19 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected a loading indicator once the view is loaded")
         
         spy.completeFeedLoading(at: 0)
-        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once loading is completed")
+        XCTAssertFalse(
+            sut.isShowingLoadingIndicator,
+            "Expected no loading indicator once loading is completed successfully"
+        )
         
         sut.simulateUserInitiatedFeedReload()
         XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected a loading indicator once the user initiates a reload")
         
-        spy.completeFeedLoading(at: 1)
-        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once loading is completed")
+        spy.completeFeedLoadingWithError(at: 1)
+        XCTAssertFalse(
+            sut.isShowingLoadingIndicator,
+            "Expected no loading indicator once user initiated loading is completed with error"
+        )
         
         sut.simulateAppearance()
         XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator when the view appears a second time")
