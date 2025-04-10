@@ -122,6 +122,7 @@
 		ED20D7912DA2BFA500403DBB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				FeedImageCell.swift,
 				FeedViewController.swift,
 			);
 			target = ED20D7732D9757CC00403DBB /* EssentialFeediOS */;
@@ -129,6 +130,7 @@
 		ED20D7922DA2C0C000403DBB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				FeedImageCell.swift,
 				FeedViewController.swift,
 			);
 			target = ED20D77A2D9757CD00403DBB /* EssentialFeediOSTests */;
