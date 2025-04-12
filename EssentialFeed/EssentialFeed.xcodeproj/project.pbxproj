@@ -124,6 +124,7 @@
 			membershipExceptions = (
 				FeedImageCell.swift,
 				FeedViewController.swift,
+				"UIView+Shimmering.swift",
 			);
 			target = ED20D7732D9757CC00403DBB /* EssentialFeediOS */;
 		};
@@ -132,6 +133,7 @@
 			membershipExceptions = (
 				FeedImageCell.swift,
 				FeedViewController.swift,
+				"UIView+Shimmering.swift",
 			);
 			target = ED20D77A2D9757CD00403DBB /* EssentialFeediOSTests */;
 		};
