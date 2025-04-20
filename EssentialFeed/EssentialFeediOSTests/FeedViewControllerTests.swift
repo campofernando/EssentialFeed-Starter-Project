@@ -217,33 +217,56 @@ final class FeedViewControllerTests: XCTestCase {
         
         let view0 = sut.simulateFeedImageViewVisible(at: 0)
         let view1 = sut.simulateFeedImageViewVisible(at: 1)
-        XCTAssertEqual(
-            view0?.isShowingRetryAction, false,
+        XCTAssertFalse(
+            view0?.isShowingRetryAction ?? true,
             "Expected no retry action for first view while loading first image"
         )
-        XCTAssertEqual(
-            view1?.isShowingRetryAction, false,
+        XCTAssertFalse(
+            view1?.isShowingRetryAction ?? true,
             "Expected no retry action for second view while loading second image"
         )
         
-        spy.completeImageLoading(at: 0)
-        XCTAssertEqual(
-            view0?.isShowingRetryAction, false,
+        let imageData = UIImage.make(withColor: .red).pngData()!
+        spy.completeImageLoading(with: imageData, at: 0)
+        XCTAssertFalse(
+            view0?.isShowingRetryAction ?? true,
             "Expected no retry action for first view once first image loading completes successfully"
         )
-        XCTAssertEqual(
-            view1?.isShowingRetryAction, false,
+        XCTAssertFalse(
+            view1?.isShowingRetryAction ?? true,
             "Expected no retry action for second view once first image loading completes successfully"
         )
         
         spy.completeImageLoadingWithError(at: 1)
-        XCTAssertEqual(
-            view0?.isShowingRetryAction, false,
+        XCTAssertFalse(
+            view0?.isShowingRetryAction ?? true,
             "Expected no retry action for first view once second image loading completes with error"
         )
-        XCTAssertEqual(
-            view1?.isShowingRetryAction, true,
+        XCTAssertTrue(
+            view1?.isShowingRetryAction ?? false,
             "Expected retry action for second view once second image loading completes with error"
+        )
+    }
+    
+    func test_feedImageViewRetryButton_isVisibleOnInvalidImageData() {
+        let image = makeImage()
+        let (sut, spy) = makeSUT()
+        
+        sut.simulateAppearance()
+        spy.completeFeedLoading(with: [image])
+        
+        let view = sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertFalse(
+            view?.isShowingRetryAction ?? true,
+            "Expected no retry action for first view while loading first image"
+        )
+        
+        let invalidImageData = Data("Invalid image data".utf8)
+        spy.completeImageLoading(with: invalidImageData, at: 0)
+        
+        XCTAssertTrue(
+            view?.isShowingRetryAction ?? false,
+            "Expected retry action once image loading completes with invalid image data"
         )
     }
     
