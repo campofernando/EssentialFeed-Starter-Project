@@ -44,6 +44,7 @@
 		EDBB65862D3D730B005EBE56 /* CodableFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBB65852D3D730B005EBE56 /* CodableFeedStore.swift */; };
 		EDBB65882D3D82CF005EBE56 /* FeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBB65872D3D82C2005EBE56 /* FeedStoreSpecs.swift */; };
 		EDBB658A2D3D8377005EBE56 /* XCTestCase+FeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBB65892D3D8377005EBE56 /* XCTestCase+FeedStoreSpecs.swift */; };
+		EDDFEEAA2DB5878100EBC6DD /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; };
 		EDF97AAD2D4D9EBF006CD2C7 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF97AAC2D4D9EBF006CD2C7 /* CoreDataHelpers.swift */; };
 		EDF97AAF2D4D9F5B006CD2C7 /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF97AAE2D4D9F5B006CD2C7 /* ManagedCache.swift */; };
 		EDF97AB12D4D9F6B006CD2C7 /* ManagedFeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF97AB02D4D9F6B006CD2C7 /* ManagedFeedImage.swift */; };
@@ -65,6 +66,13 @@
 			remoteInfo = EssentialFeediOS;
 		};
 		ED923E922D2233A400C45529 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 080EDEE821B6DA7E00813479 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 080EDEF021B6DA7E00813479;
+			remoteInfo = EssentialFeed;
+		};
+		EDDFEEAC2DB5878100EBC6DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 080EDEE821B6DA7E00813479 /* Project object */;
 			proxyType = 1;
@@ -165,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDDFEEAA2DB5878100EBC6DD /* EssentialFeed.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +207,7 @@
 				ED923E8E2D2233A400C45529 /* EssentialFeedAPIEndToEndTests */,
 				ED20D78D2DA2BF8A00403DBB /* EssentialFeediOS */,
 				ED20D77F2D9757CD00403DBB /* EssentialFeediOSTests */,
+				EDDFEEA92DB5878100EBC6DD /* Frameworks */,
 				080EDEF221B6DA7E00813479 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -322,6 +332,13 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		EDDFEEA92DB5878100EBC6DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EDF97AA92D4D9DE3006CD2C7 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +435,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				EDDFEEAD2DB5878100EBC6DD /* PBXTargetDependency */,
 			);
 			name = EssentialFeediOS;
 			packageProductDependencies = (
@@ -655,6 +673,11 @@
 			target = 080EDEF021B6DA7E00813479 /* EssentialFeed */;
 			targetProxy = ED923E922D2233A400C45529 /* PBXContainerItemProxy */;
 		};
+		EDDFEEAD2DB5878100EBC6DD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 080EDEF021B6DA7E00813479 /* EssentialFeed */;
+			targetProxy = EDDFEEAC2DB5878100EBC6DD /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -808,6 +831,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = EssentialFeed/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -839,6 +863,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = EssentialFeed/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -917,7 +942,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -931,6 +956,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
@@ -958,7 +984,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -972,6 +998,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
