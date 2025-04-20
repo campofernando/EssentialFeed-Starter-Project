@@ -11,6 +11,7 @@ import EssentialFeed
 public protocol FeedImageDataLoaderTask {
     func cancel()
 }
+
 public protocol FeedImageDataLoader {
     typealias Result = Swift.Result<Data, Error>
     
@@ -72,10 +73,14 @@ final public class FeedViewController: UITableViewController {
         cell.locationLabel.text = cellModel.location
         cell.descriptionLabel.text = cellModel.description
         cell.feedImageView.image = nil
+        cell.feedImageRetryButton.isHidden = true
         cell.feedImageContainer.startShimmering()
         tasks[indexPath] = imageLoader?.loadImageData(from: cellModel.url) { [weak cell] result in
-            if case .success(let data) = result {
+            switch result {
+            case .success(let data):
                 cell?.feedImageView.image = UIImage(data: data)
+            case .failure:
+                cell?.feedImageRetryButton.isHidden = false
             }
             cell?.feedImageContainer.stopShimmering()
         }

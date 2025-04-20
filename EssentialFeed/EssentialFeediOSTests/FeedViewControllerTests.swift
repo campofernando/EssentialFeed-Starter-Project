@@ -207,6 +207,46 @@ final class FeedViewControllerTests: XCTestCase {
         )
     }
     
+    func test_feedImageViewRetryButton_isVisibleOnImageURLLoadError() {
+        let image0 = makeImage()
+        let image1 = makeImage()
+        let (sut, spy) = makeSUT()
+        
+        sut.simulateAppearance()
+        spy.completeFeedLoading(with: [image0, image1])
+        
+        let view0 = sut.simulateFeedImageViewVisible(at: 0)
+        let view1 = sut.simulateFeedImageViewVisible(at: 1)
+        XCTAssertEqual(
+            view0?.isShowingRetryAction, false,
+            "Expected no retry action for first view while loading first image"
+        )
+        XCTAssertEqual(
+            view1?.isShowingRetryAction, false,
+            "Expected no retry action for second view while loading second image"
+        )
+        
+        spy.completeImageLoading(at: 0)
+        XCTAssertEqual(
+            view0?.isShowingRetryAction, false,
+            "Expected no retry action for first view once first image loading completes successfully"
+        )
+        XCTAssertEqual(
+            view1?.isShowingRetryAction, false,
+            "Expected no retry action for second view once first image loading completes successfully"
+        )
+        
+        spy.completeImageLoadingWithError(at: 1)
+        XCTAssertEqual(
+            view0?.isShowingRetryAction, false,
+            "Expected no retry action for first view once second image loading completes with error"
+        )
+        XCTAssertEqual(
+            view1?.isShowingRetryAction, true,
+            "Expected retry action for second view once second image loading completes with error"
+        )
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
@@ -431,6 +471,10 @@ extension FeedImageCell {
     
     var renderedImage: Data? {
         feedImageView.image?.pngData()
+    }
+    
+    var isShowingRetryAction: Bool {
+        !feedImageRetryButton.isHidden
     }
 }
 private class FakeRefreshControl: UIRefreshControl {
