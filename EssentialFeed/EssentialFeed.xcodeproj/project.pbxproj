@@ -131,6 +131,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Feed Image Loader/FeedImageDataLoader.swift",
+				"Feed UI/Controllers/FeedRefreshViewController.swift",
 				"Feed UI/Controllers/FeedViewController.swift",
 				"Feed UI/Views/FeedImageCell.swift",
 				"Feed UI/Views/UIView+Shimmering.swift",
@@ -141,6 +142,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Feed Image Loader/FeedImageDataLoader.swift",
+				"Feed UI/Controllers/FeedRefreshViewController.swift",
 				"Feed UI/Controllers/FeedViewController.swift",
 				"Feed UI/Views/FeedImageCell.swift",
 				"Feed UI/Views/UIView+Shimmering.swift",

@@ -9,23 +9,27 @@ import UIKit
 import EssentialFeed
 
 final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
-    private var feedLoader: FeedLoader?
+    public var refreshController: FeedRefreshViewController?
     private var imageLoader: FeedImageDataLoader?
     private var onViewIsAppearing: ((FeedViewController) -> Void)?
-    private var tableModel = [FeedImage]()
+    private var tableModel = [FeedImage]() {
+        didSet { tableView.reloadData() }
+    }
     private var tasks = [IndexPath: FeedImageDataLoaderTask]()
     
     public convenience init(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) {
         self.init()
-        self.feedLoader = feedLoader
+        self.refreshController = FeedRefreshViewController(feedLoader: feedLoader)
         self.imageLoader = imageLoader
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
+        refreshControl = refreshController?.view
+        refreshController?.onRefresh = { [weak self] feed in
+            self?.tableModel = feed
+        }
         tableView.prefetchDataSource = self
         
         onViewIsAppearing = { vc in
@@ -38,19 +42,8 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
         onViewIsAppearing?(self)
     }
     
-    @objc func load() {
-        refresh()
-        feedLoader?.load { [weak self] result in
-            if case .success(let feed) = result {
-                self?.tableModel = feed
-                self?.tableView.reloadData()
-            }
-            self?.refreshControl?.endRefreshing()
-        }
-    }
-    
-    private func refresh() {
-        refreshControl?.beginRefreshing()
+    private func load() {
+        refreshController?.refresh()
     }
     
     override public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
