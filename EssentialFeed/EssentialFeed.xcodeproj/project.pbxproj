@@ -135,6 +135,7 @@
 				"Feed UI/Controllers/FeedImageCellController.swift",
 				"Feed UI/Controllers/FeedRefreshViewController.swift",
 				"Feed UI/Controllers/FeedViewController.swift",
+				"Feed UI/Models/FeedViewModel.swift",
 				"Feed UI/Views/FeedImageCell.swift",
 				"Feed UI/Views/UIView+Shimmering.swift",
 			);
