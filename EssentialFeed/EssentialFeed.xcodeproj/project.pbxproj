@@ -133,7 +133,6 @@
 				"Feed Image Loader/FeedImageDataLoader.swift",
 				"Feed Presentation/FeedImageViewModel.swift",
 				"Feed Presentation/FeedPresenter.swift",
-				"Feed Presentation/FeedViewModel.swift",
 				"Feed UI/Composers/FeedUIComposer.swift",
 				"Feed UI/Controllers/FeedImageCellController.swift",
 				"Feed UI/Controllers/FeedRefreshViewController.swift",
