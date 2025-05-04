@@ -64,12 +64,11 @@ private final class FeedViewAdapter: FeedView {
                 delegate: adapter
             )
             adapter.presenter = FeedImagePresenter(
+                view: WeakRefVirtualProxy(view),
                 model: model,
                 imageLoader: loader,
                 imageTransformer: UIImage.init
             )
-            
-            adapter.presenter?.view = WeakRefVirtualProxy(view)
             return view
         }
     }

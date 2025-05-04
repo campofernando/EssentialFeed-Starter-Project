@@ -20,16 +20,17 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     private let model: FeedImage
     private let imageLoader: FeedImageDataLoader
     private let imageTransformer: (Data) -> Image?
-    var view: View?
+    private let view: View
     
-    init(model: FeedImage, imageLoader: FeedImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
+    init(view: View, model: FeedImage, imageLoader: FeedImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
+        self.view = view
         self.model = model
         self.imageLoader = imageLoader
         self.imageTransformer = imageTransformer
     }
     
     func loadImageData() {
-        view?.display(
+        view.display(
             FeedImageViewModel(
                 description: model.description,
                 location: model.location,
@@ -46,7 +47,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     private func handle(result: FeedImageDataLoader.Result) {
         if case .success(let data) = result,
            let image = imageTransformer(data) {
-            view?.display(
+            view.display(
                 FeedImageViewModel(
                     description: model.description,
                     location: model.location,
@@ -56,7 +57,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
                 )
             )
         } else {
-            view?.display(
+            view.display(
                 FeedImageViewModel(
                     description: model.description,
                     location: model.location,
