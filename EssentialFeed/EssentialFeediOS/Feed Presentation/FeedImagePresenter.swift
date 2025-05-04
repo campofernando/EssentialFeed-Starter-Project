@@ -8,7 +8,7 @@
 import Foundation
 import EssentialFeed
 
-protocol FeedImageView: AnyObject {
+protocol FeedImageView {
     associatedtype Image
     
     func display(_ model: FeedImageViewModel<Image>)
@@ -20,7 +20,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     private let model: FeedImage
     private let imageLoader: FeedImageDataLoader
     private let imageTransformer: (Data) -> Image?
-    weak var view: View?
+    var view: View?
     
     init(model: FeedImage, imageLoader: FeedImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
         self.model = model
