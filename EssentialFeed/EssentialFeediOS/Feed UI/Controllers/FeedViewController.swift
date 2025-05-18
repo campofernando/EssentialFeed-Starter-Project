@@ -29,8 +29,6 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
             vc.load()
             vc.onViewIsAppearing = nil
         }
-        
-        title = FeedPresenter.title
     }
     
     public override func viewIsAppearing(_ animated: Bool) {
