@@ -358,6 +358,19 @@ final class FeedViewControllerTests: XCTestCase {
         )
     }
     
+    func test_feedImageView_doesNotRenderLoadedImageWhenNotVisibleAnymore() {
+        let image = makeImage()
+        
+        let (sut, spy) = makeSUT()
+        sut.simulateAppearance()
+        spy.completeFeedLoading(with: [image])
+        
+        let view = sut.simulateFeedImageViewNotVisible(at: 0)
+        spy.completeImageLoading(with: anyImageData(), at: 0)
+        
+        XCTAssertNil(view?.renderedImage, "Expected no redered image when an image load finishes after the view is not visible anymore")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath,
@@ -372,6 +385,10 @@ final class FeedViewControllerTests: XCTestCase {
     private func makeImage(description: String? = nil, location: String? = nil,
                            url: URL = URL(string: "https://any-url.com")!) -> FeedImage {
         FeedImage(id: UUID(), description: description, location: location, url: url)
+    }
+    
+    private func anyImageData() -> Data {
+        return UIImage.make(withColor: .red).pngData()!
     }
     
     private func assertThat(_ sut: FeedViewController, isRendering feed: [FeedImage],
@@ -550,12 +567,15 @@ private extension FeedViewController {
         return feedImageView(at: index) as? FeedImageCell
     }
     
-    func simulateFeedImageViewNotVisible(at row: Int = 0) {
+    @discardableResult
+    func simulateFeedImageViewNotVisible(at row: Int = 0) -> FeedImageCell? {
         let view = simulateFeedImageViewVisible(at: row)
         
         let delegate = tableView.delegate
         let index = IndexPath(row: row, section: feedImagesSection)
         delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
+        
+        return view
     }
     
     func simulateFeedImageViewNearVisible(at row: Int = 0) {
