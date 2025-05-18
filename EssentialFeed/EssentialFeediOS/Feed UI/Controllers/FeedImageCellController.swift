@@ -46,7 +46,7 @@ extension FeedImageCellController: FeedImageView {
         cell?.locationLabel.text = model.location
         cell?.descriptionLabel.text = model.description
         cell?.onRetry = delegate.didRequestImage
-        
+        cell?.imageView?.setImageAnimated(model.image)
         cell?.feedImageView.image = model.image
         cell?.feedImageContainer.isShimmering = model.isLoading
         cell?.feedImageRetryButton.isHidden = !model.shouldRetry
