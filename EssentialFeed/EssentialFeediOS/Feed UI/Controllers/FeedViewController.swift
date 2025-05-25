@@ -12,12 +12,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     private var onViewIsAppearing: ((FeedViewController) -> Void)?
     var tableModel = [FeedImageCellController]() {
         didSet {
-            if Thread.isMainThread {
-                tableView.reloadData()
-            }
-            DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
-            }
+            tableView.reloadData()
         }
     }
     
