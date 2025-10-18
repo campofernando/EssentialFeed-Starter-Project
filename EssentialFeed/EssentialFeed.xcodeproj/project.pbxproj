@@ -143,12 +143,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Feed Image Loader/FeedImageDataLoader.swift",
-				"Feed Presentation/Feed.xcstrings",
 				"Feed Presentation/FeedImagePresenter.swift",
 				"Feed Presentation/FeedImageViewModel.swift",
-				"Feed Presentation/FeedLoadingViewModel.swift",
-				"Feed Presentation/FeedPresenter.swift",
-				"Feed Presentation/FeedViewModel.swift",
 				"Feed UI/Composers/FeedImageDataLoaderAdapter.swift",
 				"Feed UI/Composers/FeedLoaderPresentationAdapter.swift",
 				"Feed UI/Composers/FeedUIComposer.swift",
@@ -158,6 +154,7 @@
 				"Feed UI/Controllers/FeedImageCellController.swift",
 				"Feed UI/Controllers/FeedRefreshViewController.swift",
 				"Feed UI/Controllers/FeedViewController.swift",
+				"Feed UI/Views/ErrorView.swift",
 				"Feed UI/Views/FeedImageCell.swift",
 				"Feed UI/Views/UIImageView+Animations.swift",
 				"Feed UI/Views/UIView+Shimmering.swift",
@@ -168,12 +165,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Feed Image Loader/FeedImageDataLoader.swift",
-				"Feed Presentation/Feed.xcstrings",
 				"Feed Presentation/FeedImagePresenter.swift",
 				"Feed Presentation/FeedImageViewModel.swift",
-				"Feed Presentation/FeedLoadingViewModel.swift",
-				"Feed Presentation/FeedPresenter.swift",
-				"Feed Presentation/FeedViewModel.swift",
 				"Feed UI/Composers/FeedImageDataLoaderAdapter.swift",
 				"Feed UI/Composers/FeedLoaderPresentationAdapter.swift",
 				"Feed UI/Composers/FeedUIComposer.swift",
@@ -183,6 +176,7 @@
 				"Feed UI/Controllers/FeedImageCellController.swift",
 				"Feed UI/Controllers/FeedRefreshViewController.swift",
 				"Feed UI/Controllers/FeedViewController.swift",
+				"Feed UI/Views/ErrorView.swift",
 				"Feed UI/Views/FeedImageCell.swift",
 				"Feed UI/Views/UIImageView+Animations.swift",
 				"Feed UI/Views/UIView+Shimmering.swift",
@@ -1030,9 +1024,12 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.campofernando594.EssentialFeediOS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
@@ -1072,9 +1069,12 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.campofernando594.EssentialFeediOS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
@@ -1097,7 +1097,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.campofernando594.EssentialFeediOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -1119,7 +1123,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.campofernando594.EssentialFeediOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

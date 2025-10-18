@@ -17,9 +17,8 @@ final class FeedUIIntegrationTests: XCTestCase {
         
         sut.simulateAppearance()
         
-        let bundle = Bundle(for: FeedViewController.self)
         let localizedKey = "FEED_VIEW_TITLE"
-        let localizedTitle = bundle.localizedString(forKey: localizedKey, value: nil, table: "Feed")
+        let localizedTitle = localized(localizedKey)
         
         XCTAssertNotEqual(localizedKey, localizedTitle, "Missing localized string for key: \(localizedKey)")
         XCTAssertEqual(sut.title, localizedTitle)
