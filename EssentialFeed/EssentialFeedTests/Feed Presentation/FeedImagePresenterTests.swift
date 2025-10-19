@@ -6,11 +6,41 @@
 //
 
 import XCTest
+import EssentialFeed
+
+protocol FeedImageView {
+    func display(_ model: FeedImageViewModel)
+}
+
+struct FeedImageViewModel {
+    let description: String?
+    let location: String?
+    let image: Any?
+    let isLoading: Bool
+    let shouldRetry: Bool
+    
+    var hasLocation: Bool {
+        location != nil
+    }
+}
 
 class FeedImagePresenter {
+    let view: FeedImageView
     
-    init(view: Any) {
-        
+    init(view: FeedImageView) {
+        self.view = view
+    }
+    
+    func didStartLoadingImageData(for model: FeedImage) {
+        view.display(
+            FeedImageViewModel(
+                description: model.description,
+                location: model.location,
+                image: nil,
+                isLoading: true,
+                shouldRetry: false
+            )
+        )
     }
 }
 
@@ -21,6 +51,21 @@ class FeedImagePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.isEmpty, "Expected no view messages")
     }
     
+    func test_didStartLoadingImageData_displaysLoadingImage() {
+        let (sut, view) = makeSUT()
+        let image = uniqueImage()
+        
+        sut.didStartLoadingImageData(for: image)
+        
+        let message = view.messages.first
+        XCTAssertEqual(view.messages.count, 1)
+        XCTAssertEqual(message?.description, image.description)
+        XCTAssertEqual(message?.location, image.location)
+        XCTAssertNil(message?.image)
+        XCTAssertTrue(message?.isLoading ?? false)
+        XCTAssertFalse(message?.shouldRetry ?? true)
+    }
+    
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedImagePresenter, view: ViewSpy) {
         let view = ViewSpy()
         let sut = FeedImagePresenter(view: view)
@@ -29,7 +74,11 @@ class FeedImagePresenterTests: XCTestCase {
         return (sut, view)
     }
     
-    private class ViewSpy {
-        let messages = [Any]()
+    private class ViewSpy: FeedImageView {
+        private(set) var messages = [FeedImageViewModel]()
+        
+        func display(_ model: FeedImageViewModel) {
+            messages.append(model)
+        }
     }
 }
