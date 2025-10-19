@@ -42,6 +42,18 @@ class FeedImagePresenter {
             )
         )
     }
+    
+    func didFinishLoadingImage(with data: Data, for model: FeedImage) {
+        view.display(
+            FeedImageViewModel(
+                description: model.description,
+                location: model.location,
+                image: nil,
+                isLoading: false,
+                shouldRetry: true
+            )
+        )
+    }
 }
 
 class FeedImagePresenterTests: XCTestCase {
@@ -64,6 +76,22 @@ class FeedImagePresenterTests: XCTestCase {
         XCTAssertNil(message?.image)
         XCTAssertTrue(message?.isLoading ?? false)
         XCTAssertFalse(message?.shouldRetry ?? true)
+    }
+    
+    func test_didFinishLoadingImage_displaysRetryOnFailedImageDataTransformation() {
+        let (sut, view) = makeSUT()
+        let data = Data()
+        let image = uniqueImage()
+        
+        sut.didFinishLoadingImage(with: data, for: image)
+        
+        let message = view.messages.first
+        XCTAssertEqual(view.messages.count, 1)
+        XCTAssertEqual(message?.description, image.description)
+        XCTAssertEqual(message?.location, image.location)
+        XCTAssertNil(message?.image)
+        XCTAssertFalse(message?.isLoading ?? true)
+        XCTAssertTrue(message?.shouldRetry ?? false)
     }
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedImagePresenter, view: ViewSpy) {
