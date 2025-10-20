@@ -151,8 +151,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Feed Image Loader/FeedImageDataLoader.swift",
-				"Feed Presentation/FeedImagePresenter.swift",
-				"Feed Presentation/FeedImageViewModel.swift",
 				"Feed UI/Composers/FeedImageDataLoaderAdapter.swift",
 				"Feed UI/Composers/FeedLoaderPresentationAdapter.swift",
 				"Feed UI/Composers/FeedUIComposer.swift",
@@ -173,8 +171,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Feed Image Loader/FeedImageDataLoader.swift",
-				"Feed Presentation/FeedImagePresenter.swift",
-				"Feed Presentation/FeedImageViewModel.swift",
 				"Feed UI/Composers/FeedImageDataLoaderAdapter.swift",
 				"Feed UI/Composers/FeedLoaderPresentationAdapter.swift",
 				"Feed UI/Composers/FeedUIComposer.swift",
