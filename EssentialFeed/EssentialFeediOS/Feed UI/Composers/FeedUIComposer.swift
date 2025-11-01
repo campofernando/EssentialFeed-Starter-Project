@@ -16,11 +16,10 @@ public final class FeedUIComposer {
         let presentationAdapter = FeedLoaderPresentationAdapter(
             feedLoader: MainQueueDispatchDecorator(decoratee: feedLoader)
         )
-        let refreshController = FeedRefreshViewController(delegate: presentationAdapter)
-        let feedController = makeWith(
-            refreshController: refreshController,
-            title: FeedPresenter.title
-        )
+        let feedController = makeWith(title: FeedPresenter.title)
+        let refreshController = feedController.refreshController!
+        refreshController.delegate = presentationAdapter
+        
         let feedPresenter = FeedPresenter(
             feedView: FeedViewAdapter(
                 controller: feedController,
@@ -33,11 +32,10 @@ public final class FeedUIComposer {
         return feedController
     }
     
-    static func makeWith(refreshController: FeedRefreshViewController, title: String) -> FeedViewController {
+    static func makeWith(title: String) -> FeedViewController {
         let bundle = Bundle(for: FeedViewController.self)
         let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
         let feedController = storyboard.instantiateInitialViewController() as! FeedViewController
-        feedController.refreshController = refreshController
         feedController.title = title
         return feedController
     }
