@@ -145,7 +145,7 @@ Location</string>
                         <connections>
                             <outlet property="dataSource" destination="kE7-H4-4hp" id="b9c-Q9-hcW"/>
                             <outlet property="delegate" destination="kE7-H4-4hp" id="EgJ-mV-ChW"/>
-                            <outlet property="prefetchDataSource" destination="kE7-H4-4hp" id="bhY-0P-8dS"/>
+                            <outlet property="prefetchDataSource" destination="kE7-H4-4hp" id="mB3-RX-jb0"/>
                         </connections>
                     </tableView>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bCX-fg-3Zj" userLabel="Refresh Control">
