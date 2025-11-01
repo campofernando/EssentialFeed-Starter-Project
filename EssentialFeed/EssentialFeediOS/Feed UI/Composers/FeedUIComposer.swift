@@ -17,15 +17,14 @@ public final class FeedUIComposer {
             feedLoader: MainQueueDispatchDecorator(decoratee: feedLoader)
         )
         let feedController = makeWith(title: FeedPresenter.title)
-        let refreshController = feedController.refreshController!
-        refreshController.delegate = presentationAdapter
+        feedController.delegate = presentationAdapter
         
         let feedPresenter = FeedPresenter(
             feedView: FeedViewAdapter(
                 controller: feedController,
                 loader: MainQueueDispatchDecorator(decoratee: imageLoader)
             ),
-            loadingView: WeakRefVirtualProxy(refreshController),
+            loadingView: WeakRefVirtualProxy(feedController),
             errorView: WeakRefVirtualProxy(feedController)
         )
         presentationAdapter.presenter = feedPresenter
