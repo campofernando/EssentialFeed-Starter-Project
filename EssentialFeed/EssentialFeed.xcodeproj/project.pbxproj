@@ -164,6 +164,7 @@
 				"Feed UI/Views/Feed.xcassets",
 				"Feed UI/Views/FeedImageCell.swift",
 				"Feed UI/Views/UIImageView+Animations.swift",
+				"Feed UI/Views/UITableView+Dequeueing.swift",
 				"Feed UI/Views/UIView+Shimmering.swift",
 			);
 			target = ED20D7732D9757CC00403DBB /* EssentialFeediOS */;
@@ -185,6 +186,7 @@
 				"Feed UI/Views/Feed.xcassets",
 				"Feed UI/Views/FeedImageCell.swift",
 				"Feed UI/Views/UIImageView+Animations.swift",
+				"Feed UI/Views/UITableView+Dequeueing.swift",
 				"Feed UI/Views/UIView+Shimmering.swift",
 			);
 			target = ED20D77A2D9757CD00403DBB /* EssentialFeediOSTests */;
