@@ -163,6 +163,19 @@ Then the app should display an error message
 #### Empty cache course - Error course (sad path):
 1. System delivers not found error
 
+### Cache Feed Image Data Use Case
+
+#### Data:
+- Image data
+
+#### Primary course (happy path):
+1. Execute "Save Image Data" command with above data
+2. System saves new cache data
+3. System delivers success message
+
+#### Saving error - Error course (sad path):
+1. System delivers error
+
 ## Flowchart
 
 ![Feed Loading Feature](feed_flowchart.png)
