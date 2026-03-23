@@ -124,7 +124,7 @@ Then the app should display an error message
 #### Saving error course (sad path):
 1. System delivers error
 
-### Load Image Data from Remote Use Case
+### Load Feed Image Data from Remote Use Case
 
 #### Data:
 - URL
@@ -143,6 +143,25 @@ Then the app should display an error message
 
 #### Connectivity error - Error course (sad path):
 1. System delivers connectivity error
+
+### Load Feed Image Data from Cache Use Case
+
+#### Data:
+- URL
+
+#### Primary Course (happy path):
+1. Execute "Load Image Data" command with above data
+2. System retrieves data from cache
+3. System delivers cached image data
+
+#### Cancel course:
+1. System does not delivers image data nor error
+
+#### Retrieval Error - Error course (sad path):
+1. System delivers error
+
+#### Empty cache course - Error course (sad path):
+1. System delivers not found error
 
 ## Flowchart
 
