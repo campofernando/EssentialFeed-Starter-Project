@@ -124,6 +124,26 @@ Then the app should display an error message
 #### Saving error course (sad path):
 1. System delivers error
 
+### Load Image Data from Remote Use Case
+
+#### Data:
+- URL
+
+#### Primary Course (happy path):
+1. Execute "Load Image Data" command with above data
+2. System downloads image data from the URL
+3. System validates downloaded data
+3. System delivers image data
+
+#### Cancel course:
+1. System does not delivers image data nor error
+
+#### Invalid data - Error course (sad path):
+1. System delivers invalid data error
+
+#### Connectivity error - Error course (sad path):
+1. System delivers connectivity error
+
 ## Flowchart
 
 ![Feed Loading Feature](feed_flowchart.png)
