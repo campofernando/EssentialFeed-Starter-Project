@@ -124,9 +124,14 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         XCTAssertTrue(capturedResults.isEmpty, "Expected no results after instance has been deallocated")
     }
     
-    private func makeSut() -> (RemoteFeedImageDataLoader, HTTPClientSpy) {
+    // MARK: - Helpers
+    
+    private func makeSut(file: StaticString = #filePath,
+                         line: UInt = #line) -> (RemoteFeedImageDataLoader, HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedImageDataLoader(client: client)
+        trackForMemoryLeaks(client, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, client)
     }
     
