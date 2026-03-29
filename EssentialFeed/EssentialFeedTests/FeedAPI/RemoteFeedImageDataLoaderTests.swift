@@ -99,16 +99,18 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
     
     private func expect(_ sut: RemoteFeedImageDataLoader,
                         toCompleteWithError expectedError: RemoteFeedImageDataLoader.Error,
-                        when action: () -> Void) {
+                        when action: () -> Void,
+                        file: StaticString = #filePath,
+                        line: UInt = #line) {
         
         let expectation = expectation(description: "Wait for load completion")
         
         sut.loadImageData(from: anyURL()) { result in
             switch result {
             case .success(_):
-                XCTFail("Expected failure, got success")
+                XCTFail("Expected failure, got success", file: file, line: line)
             case .failure(let receivedError):
-                XCTAssertEqual(receivedError as? RemoteFeedImageDataLoader.Error, expectedError)
+                XCTAssertEqual(receivedError as? RemoteFeedImageDataLoader.Error, expectedError, file: file, line: line)
             }
             expectation.fulfill()
         }
