@@ -11,8 +11,20 @@ import EssentialFeed
 class RemoteFeedImageDataLoader {
     let client: HTTPClient
     
-    enum Error: Swift.Error {
+    enum Error: Swift.Error, Equatable {
+        case connectivity(underlying: Swift.Error)
         case invalidData
+        
+        static func == (lhs: Error, rhs: Error) -> Bool {
+            switch (lhs, rhs) {
+            case (.connectivity(let lhsError), .connectivity(let rhsError)):
+                return lhsError.localizedDescription == rhsError.localizedDescription
+            case (.invalidData, .invalidData):
+                return true
+            default:
+                return false
+            }
+        }
     }
     
     init(client: HTTPClient) {
@@ -29,7 +41,7 @@ class RemoteFeedImageDataLoader {
                 }
                 completion(.success(data))
             case let .failure(error):
-                completion(.failure(error))
+                completion(.failure(Error.connectivity(underlying: error)))
             }
         }
     }
@@ -63,26 +75,29 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         let (sut, client) = makeSut()
         let error = anyNSError()
         
-        let expectation = expectation(description: "Wait for load completion")
-        
-        sut.loadImageData(from: anyURL()) { result in
-            switch result {
-            case let .success(receivedData):
-                XCTFail("Expected failure, got success with data: \(receivedData)")
-            case let .failure(receivedError):
-                XCTAssertEqual(receivedError as NSError, error)
-            }
-            
-            expectation.fulfill()
+        expect(sut, toCompleteWithError: .connectivity(underlying: error)) {
+            client.complete(with: error)
         }
-        
-        client.complete(with: error)
-        wait(for: [expectation], timeout: 1.0)
     }
     
     func test_load_deliversErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSut()
         let statusCode = 500
+        
+        expect(sut, toCompleteWithError: .invalidData) {
+            client.complete(withStatusCode: statusCode, andData: Data())
+        }
+    }
+    
+    private func makeSut() -> (RemoteFeedImageDataLoader, HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedImageDataLoader(client: client)
+        return (sut, client)
+    }
+    
+    private func expect(_ sut: RemoteFeedImageDataLoader,
+                        toCompleteWithError expectedError: RemoteFeedImageDataLoader.Error,
+                        when action: () -> Void) {
         
         let expectation = expectation(description: "Wait for load completion")
         
@@ -90,20 +105,14 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
             switch result {
             case .success(_):
                 XCTFail("Expected failure, got success")
-            case .failure(let error):
-                XCTAssertEqual(error as? RemoteFeedImageDataLoader.Error, RemoteFeedImageDataLoader.Error.invalidData)
+            case .failure(let receivedError):
+                XCTAssertEqual(receivedError as? RemoteFeedImageDataLoader.Error, expectedError)
             }
             expectation.fulfill()
         }
         
-        client.complete(withStatusCode: statusCode, andData: Data())
+        action()
         wait(for: [expectation], timeout: 1.0)
-    }
-    
-    private func makeSut() -> (RemoteFeedImageDataLoader, HTTPClientSpy) {
-        let client = HTTPClientSpy()
-        let sut = RemoteFeedImageDataLoader(client: client)
-        return (sut, client)
     }
     
     private class HTTPClientSpy: HTTPClient {
