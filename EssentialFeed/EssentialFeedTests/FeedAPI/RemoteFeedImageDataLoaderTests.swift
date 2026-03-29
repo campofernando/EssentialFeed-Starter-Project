@@ -50,7 +50,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
-    func test_load_requestsDataFromUrl() {
+    func test_loadImageData_requestsDataFromUrl() {
         let (sut, client) = makeSut()
         
         sut.loadImageData(from: anyURL(), completion: { _ in })
@@ -58,7 +58,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [anyURL()])
     }
     
-    func test_loadTwice_requestsDataFromURL() {
+    func test_loadImageDataTwice_requestsDataFromURL() {
         let (sut, client) = makeSut()
         
         sut.loadImageData(from: anyURL(), completion: { _ in })
@@ -67,7 +67,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [anyURL(), anyURL()])
     }
     
-    func test_load_deliversErrorOnClientError() {
+    func test_loadImageData_deliversErrorOnClientError() {
         let (sut, client) = makeSut()
         let error = anyNSError()
         
@@ -76,7 +76,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         }
     }
     
-    func test_load_deliversErrorOnNon200HTTPResponse() {
+    func test_loadImageData_deliversErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSut()
         let statusCodes = [199, 201, 300, 400, 500]
         
@@ -87,7 +87,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         }
     }
     
-    func test_load_deliversInvalidDataErrorOn200HTTPResponseWithEmptyData() {
+    func test_loadImageData_deliversInvalidDataErrorOn200HTTPResponseWithEmptyData() {
         let (sut, client) = makeSut()
         let data = Data()
         
