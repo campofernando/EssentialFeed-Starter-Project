@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RemoteFeedImageDataLoader {
+public final class RemoteFeedImageDataLoader: FeedImageDataLoader {
     let client: HTTPClient
     
     public enum Error: Swift.Error, Equatable {
