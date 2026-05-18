@@ -168,12 +168,6 @@ class URLSessionHTTPClientTests: XCTestCase {
         }
 
         private static let queue = DispatchQueue(label: "URLProtocolStub.queue")
-        private static let userInitiatedQueue: OperationQueue = {
-            let q = OperationQueue()
-            q.maxConcurrentOperationCount = 1
-            q.qualityOfService = .userInitiated
-            return q
-        }()
         
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
             stub = Stub(data: data, response: response, error: error, requestObserver: nil)
@@ -198,26 +192,22 @@ class URLSessionHTTPClientTests: XCTestCase {
         override func startLoading() {
             guard let stub = URLProtocolStub.stub else { return }
 
-            URLProtocolStub.userInitiatedQueue.addOperation { [weak self] in
-                guard let self = self else { return }
+            if let data = stub.data {
+                self.client?.urlProtocol(self, didLoad: data)
+            }
 
-                if let data = stub.data {
-                    self.client?.urlProtocol(self, didLoad: data)
-                }
+            if let response = stub.response {
+                self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            }
 
-                if let response = stub.response {
-                    self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-                }
+            if let error = stub.error {
+                self.client?.urlProtocol(self, didFailWithError: error)
+            } else {
+                self.client?.urlProtocolDidFinishLoading(self)
+            }
 
-                if let error = stub.error {
-                    self.client?.urlProtocol(self, didFailWithError: error)
-                } else {
-                    self.client?.urlProtocolDidFinishLoading(self)
-                }
-
-                if let observer = stub.requestObserver {
-                    observer(self.request)
-                }
+            if let observer = stub.requestObserver {
+                observer(self.request)
             }
         }
         
