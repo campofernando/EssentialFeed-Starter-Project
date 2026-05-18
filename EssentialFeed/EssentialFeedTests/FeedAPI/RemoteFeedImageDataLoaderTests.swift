@@ -173,7 +173,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         }
         task.cancel()
         
-        client.complete(withStatusCode: 404, andData: Data("any data".utf8))
+        client.complete(withStatusCode: 404, andData: anyData())
         client.complete(withStatusCode: 200, andData: Data("non-empty data".utf8))
         client.complete(with: anyNSError())
         
