@@ -41,7 +41,7 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
         let (sut, client) = makeSut()
         
         expect(sut, toCompleteWith: failure(.connectivity)) {
-            let clientError = NSError(domain: "Test", code: 0)
+            let clientError = anyNSError()
             client.complete(with: clientError)
         }
     }

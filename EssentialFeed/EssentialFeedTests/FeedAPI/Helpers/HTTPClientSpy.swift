@@ -17,10 +17,10 @@ class HTTPClientSpy: HTTPClient {
         return requests.map { $0.url }
     }
     
-    private(set) var requests = [(url: URL, completion: (HTTPClientResult) -> Void)]()
+    private(set) var requests = [(url: URL, completion: (HTTPClient.Result) -> Void)]()
     private(set) var cancelledURLs = [URL]()
     
-    func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) -> HTTPClientTask {
+    func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
         requests.append((url, completion))
         return Task { [weak self] in
             self?.cancelledURLs.append(url)
@@ -38,6 +38,6 @@ class HTTPClientSpy: HTTPClient {
             httpVersion: nil,
             headerFields: nil
         )!
-        requests[index].completion(.success(data, response))
+        requests[index].completion(.success((data, response)))
     }
 }

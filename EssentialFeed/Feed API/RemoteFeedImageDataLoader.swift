@@ -57,16 +57,15 @@ public final class RemoteFeedImageDataLoader: FeedImageDataLoader {
         let task = HTTPTaskWrapper(completion)
         task.wrapped = client.get(from: url) { [weak self] result in
             guard self != nil else { return }
-            switch result {
-            case let .success(data, response):
-                if response.statusCode == 200, !data.isEmpty {
-                    task.complete(with: .success(data))
-                } else {
-                    task.complete(with: .failure(Error.invalidData))
+            
+            task.complete(
+                with: result.mapError { error in
+                    Error.connectivity(underlying: error)
+                }.flatMap { (data, response) in
+                    let isValidData = response.statusCode == 200 && !data.isEmpty
+                    return isValidData ? .success(data) : .failure(Error.invalidData)
                 }
-            case let .failure(error):
-                task.complete(with: .failure(Error.connectivity(underlying: error)))
-            }
+            )
         }
         return task
     }
