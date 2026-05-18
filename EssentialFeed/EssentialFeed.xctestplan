@@ -6,7 +6,8 @@
       "options" : {
         "addressSanitizer" : {
           "enabled" : false
-        }
+        },
+        "threadSanitizerEnabled" : false
       }
     }
   ],
