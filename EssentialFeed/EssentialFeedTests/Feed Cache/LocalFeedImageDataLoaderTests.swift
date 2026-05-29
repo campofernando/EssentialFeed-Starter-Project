@@ -9,7 +9,7 @@ import XCTest
 import EssentialFeed
 
 protocol FeedImageDataStore {
-    func retrieve(dataForURL url: URL)
+    func retrieve(dataForURL url: URL, completion: @escaping (Error) -> Void)
 }
 
 final class LocalFeedImageDataLoader: FeedImageDataLoader {
@@ -26,7 +26,9 @@ final class LocalFeedImageDataLoader: FeedImageDataLoader {
     
     func loadImageData(from url: URL,
                        completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        store.retrieve(dataForURL: url)
+        store.retrieve(dataForURL: url) { error in
+            completion(.failure(error))
+        }
         return Task()
     }
 }
@@ -48,6 +50,27 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.retrieve(dataFor: url)])
     }
     
+    func test_loadImageDataFromURL_failsOnStoreError() throws {
+        let (sut, store) = makeSUT()
+        let url = anyURL()
+        let expectedError = anyNSError()
+        
+        let exp = expectation(description: "Wait for completion")
+        
+        _ = sut.loadImageData(from: url) { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure, got success instead")
+            case .failure(let receivedError):
+                XCTAssertEqual(receivedError as NSError, expectedError)
+            }
+            exp.fulfill()
+        }
+        store.completeWith(error: expectedError)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file,
@@ -67,9 +90,15 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         }
         
         private(set) var receivedMessages = [Message]()
+        private(set) var completions = [(Error) -> Void]()
         
-        func retrieve(dataForURL url: URL) {
+        func retrieve(dataForURL url: URL, completion: @escaping (Error) -> Void) {
             receivedMessages.append(.retrieve(dataFor: url))
+            completions.append(completion)
+        }
+        
+        func completeWith(error: Error, at index: Int = 0) {
+            completions[index](error)
         }
     }
 }
